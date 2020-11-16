@@ -1,0 +1,59 @@
+Admin
+> bundle exec rake accounts:promote_users_to_jobteaser_admin EMAILS="john.doe@jobteaser.com"
+
+Disable repports
+> sudo nano /etc/default/apport
+
+TOP 10
+> find ./ -type f -iname "*.ext" -printf '%s %p\n'| sort -nr | head -10
+
+git log diff
+> git log $(git describe --tags $(git rev-list --tags --max-count=1))..HEAD --pretty=format:"%an %h %s"
+
+
+KUB
+switch to env
+> kubectx dev.jt
+get pods data
+> kubectl get pods -l release=jobteaser-13256 // PR number
+improvment (shortlists): harmonize shortlist whitespace & heading size
+
+FEATURE env
+release
+> bin/release-feature-env <pull-request-number> $(git rev-parse HEAD) short
+status
+> helm status --tiller-namespace=jobteaser jobteaser-feature-short-<pull-request-number>
+delete
+> bin/delete-feature-env jobteaser-feature-short-<pull-request-number>
+debug
+> bin/debug-feature-env jobteaser-feature-<type>-<pull-request-number>
+
+PORT FORWARDIN
+kubens shortlist;kubectl port-forward po/shortlist-master-6d7474cbb8-75rb8 50051
+kubens career-services;kubectl port-forward po/talent-bank-master-apiserver-6c59859788-tm49s 4000
+
+TEST ruby
+> rspec <path_name/file.spec>
+> RAILS_ENV=test rake db:drop db:create db:schema:load
+
+
+SHORTLIST ONE LINERS
+clean backlist
+> docker exec shortlist_postgresql_1 psql -U shortlist -d shortlist_test -q -c "delete from discarded_student_profiles"
+reset status
+> docker exec candidate_postgresql_1 psql -U candidate -d candidate_test -q -c "update candidates set status = 'unread';"
+clean sent message
+> docker exec candidate_postgresql_1 psql -U candidate -d candidate_test -q -c 'update candidates set email = NULL;'
+SHORTLIST
+un ignore user
+> docker exec shortlist_postgresql_1 psql -U shortlist -d shortlist_test -q -c "delete from discarded_student_profiles"
+
+CANDIDATE
+feeding
+> bundle exec rake data_operations:populate_job_ads_public_application_v1 (on jt)
+
+PROFILE
+> bin/profile -c data/cfg/local.yaml start
+
+SIDEKICK
+> bundle exec sidekiq -C config/sidekiq.yml
