@@ -23,3 +23,6 @@ alias po='rm /home/julien/.pomo/pomo.sock; pomo s wok'
 ## git but dont fit on git_aliases nor git_config
 
 alias gitclean='git branch --merged | egrep -v "(^\*|master|develop)" | xargs git branch -d'
+
+## ovpn
+alias ovpn='sudo openvpn --config client.ovpn --ca ca.crt --key client.key --cert client.crt'

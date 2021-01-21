@@ -191,3 +191,7 @@ export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:/home/julien/softwares
 export PATH=$PATH:/home/julien/softwares/bashtop
 export PATH=$PATH:$HOME/.tmuxifier/bin
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+source "$HOME/.cargo/env"
+
+
