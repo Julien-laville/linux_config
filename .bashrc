@@ -123,8 +123,7 @@ fi
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
+
 ###-begin-npm-completion-###
 #
 # npm command completion script
@@ -186,12 +185,38 @@ elif type compctl &>/dev/null; then
 fi
 ###-end-npm-completion-###
 
+### start git bash promp
+if [ -f "$HOME/.bash-git-prompt/gitprompt.sh" ]; then
+    GIT_PROMPT_ONLY_IN_REPO=1
+    source $HOME/.bash-git-prompt/gitprompt.sh
+fi
+### end git bash promp
 
-export PATH=$PATH:/usr/local/go/bin
+
+
 export PATH=$PATH:/home/julien/softwares
 export PATH=$PATH:/home/julien/softwares/bashtop
-export PATH=$PATH:$HOME/.tmuxifier/bin
-export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
-source "$HOME/.cargo/env"
 
 
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+if [ -d ~/.bash_completion.d ]; then
+  for file in ~/.bash_completion.d/*; do
+    . $file
+  done
+fi
+
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+export DOCKER_USER="$(id -u):$(id -g)"
+export DOCKER_USER="$(id -u):$(id -g)"
+
+export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+export USERNAME_SSH="jlaville"
+
+
+# BUN
+
+export BUN_INSTALL="/home/julienlaville/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
